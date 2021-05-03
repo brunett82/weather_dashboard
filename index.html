@@ -9,7 +9,10 @@
   </head>
   <body>
     <header>
+      <div class="text-center">
         <h1>Weather Dashboard</h1>
+
+      </div>  
     </header>
     <div class="row">
         <div class="col-md-3">
@@ -21,8 +24,23 @@
                     </form>
             </div>
         </div>
-        <div class="col-lg-9">
+        <div id="main-card" class= "col-lg-9 border border-dark">
 
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-9">
+            <h3>5-Day Forecast</h3>
+            <div id="fiveDay-cards">
+              <div class="card">
+                  <div class="card-body">
+                    <span class="card-title"></span>
+                    <span id="icon#1"></span>
+                    <p class="card-text"></p>
+                    <p class="card-text"></p>
+                  </div>
+              </div>
+            </div>
         </div>
     </div>
     <script src="./assets/script.js"></script>
