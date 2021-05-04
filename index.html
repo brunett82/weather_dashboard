@@ -8,40 +8,38 @@
     <title>Weather Dashboard</title>
   </head>
   <body>
-    <header>
-      <div class="text-center">
-        <h1>Weather Dashboard</h1>
-
-      </div>  
+   
+    <header class="container-fluid p-4 text-left">
+      <h1>Weather Dashboard</h1>
     </header>
-    <div class="row">
-        <div class="col-md-3">
-            <div class="col-12 bg-light p-3">
-                <h1 class="text">Search for a City:</h1>
-                    <form id="search-form" class="mb-2">
-                        <input id="search-input" class="form-input w-100" type="text" placeholder="Search">
-                        <button class="btn btn-info btn-block">Search</button>
-                    </form>
-            </div>
-        </div>
-        <div id="main-card" class= "col-lg-9 border border-dark">
 
+    <div class="container-fluid row">
+      <div class="col-3 justify-content-center pt-3">
+        <div class="search mb-4">
+          <h3 class="justify-content-start pt-3">Enter a City to See Current and 5-Day Forecast</h3>
+          <form class="form-inline">
+            <input class="form-control float-left" type="search" placeholder="Atlanta">
+            <button class="btn btn-outline-dark" type="submit">Search</button>
+          </form>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-9">
-            <h3>5-Day Forecast</h3>
-            <div id="fiveDay-cards">
-              <div class="card">
-                  <div class="card-body">
-                    <span class="card-title"></span>
-                    <span id="icon#1"></span>
-                    <p class="card-text"></p>
-                    <p class="card-text"></p>
-                  </div>
-              </div>
+        <div>
+          <h4>Search History:</h4>
+          <div class="container col-12" id="search-history"></div>
+          <div class="row">
+            <div class="col-6">
+              <img id="curIcon">
+              <p id="curTemp"></p>
+              <p id="curHumid"></p>
+              <p id="curWind"></p>
             </div>
+          </div>
         </div>
+      </div>
+      <div class="col-9">
+        <div class="bg-dark p-3">
+          <h3 id="cityName" class="justify-content-center text-light"></h3>
+        </div>
+      </div>
     </div>
     <script src="./assets/script.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
