@@ -13,6 +13,20 @@
 var today = moment().format("L");
 var locale = $('#searchField').val().trim();
 var key = '213af9b7d597899a5c6f22af5ed57261'
+var qUrl = `https://api.openweathermap.org/data/2.5/weather?q=${locale}&appid=${key}`;
+var icon = wResponse.weather[0].icon;
+var iUrl = `https://openweathermap.org/img/w/${icon}.png`
+
+//Current Weather function//
+
+function curWeather(locale) {
+    $.ajax({
+        url: qUrl,
+        method: 'GET'
+    }).then(function(wResponse) {
+
+    })
+}
 
 
 //Search button functionality
