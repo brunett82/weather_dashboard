@@ -9,3 +9,15 @@
     4A. Create an object to contain the data (city, temp, humidity, windspeed, UV index, and weather Icon).
 7. Render current day forecast data from object to primary box.
 8. Render 5 day forecast data to individual cards.*/
+
+var today = moment().format("L");
+var locale = $('#searchField').val().trim();
+var key = '213af9b7d597899a5c6f22af5ed57261'
+
+
+//Search button functionality
+$('#button').on('click', function(event) {
+    event.preventDefault();
+
+
+})
