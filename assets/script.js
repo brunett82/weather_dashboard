@@ -21,23 +21,42 @@ var key = '957c1d427eb08dc32b2d83caeea47227'
 
 function curWeather(locale) {
     var qUrl = `https://api.openweathermap.org/data/2.5/weather?q=${locale}&units=imperial&appid=957c1d427eb08dc32b2d83caeea47227`;
-   
-   
+     
     fetch(qUrl)
     .then(function(response) {
         return response.json();
     })
     .then(function (data){
+        var icon = data.weather[0].icon;
+        var iUrl = `https://openweathermap.org/img/wn/${icon}.png`;
         var cityData = $(`
-                    <h3> ${data.name} ${date} <img src="${iUrl}" alt="${data.weather[0].description}"</h3>
-                    <p> Current Temp: ${data.main.temp} Farenheit </p>
+                    <h3> ${data.name}  ${date} <img src="${iUrl}" alt="${data.weather[0].description}"</h3>
+                    <p> Current Temp: ${data.main.temp}\u00B0 F </p>
                     <p> Wind Speed:  ${data.wind.speed} mph </p>
                     <p> Humidity: ${data.main.humidity} \% </p>`);
-        var icon = data.weather[0].icon;
-        console.log('icon', icon);
-        var iUrl = `https://openweathermap.org/img/wn/${icon}.png`
+                    console.log('data', data);
+       
         $("#todayWeather").append(cityData);
-    })      
+        
+    var lat = data.coord.lat;
+    var lon = data.coord.lon;  
+    var indexUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=957c1d427eb08dc32b2d83caeea47227`;  
+    
+    fetch(indexUrl)
+    .then(function (response) {
+        return response.json();
+    })
+   
+    .then(function (uvData) {
+       
+        var uvResult = uvData.value;
+        var uvWrite = $(`<p>UV Index: <span id='indexColor' class='p-2'>${uvResult}</span></p>`);
+        $("#todayWeather").append(uvWrite);
+        
+    })
+    
+    })
+   
     
 };
 
