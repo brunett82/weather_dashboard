@@ -41,21 +41,30 @@ function curWeather(locale) {
     var lat = data.coord.lat;
     var lon = data.coord.lon;  
     var indexUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=957c1d427eb08dc32b2d83caeea47227`;  
-    
+    /*
     fetch(indexUrl)
-    .then(function (response) {
-        return response.json();
+    .then(function (uvResponse) {
+        return uvResponse.json();
     })
    
     .then(function (uvData) {
        
         var uvResult = uvData.value;
         var uvWrite = $(`<p>UV Index: <span id='indexColor' class='p-2'>${uvResult}</span></p>`);
-        $("#todayWeather").append(uvWrite);
         
-    })
-    
-    })
+        $("#todayWeather").append(uvWrite);
+    });
+    if (uvResult <= 3) {
+        $("#indexColor").css("background-color", "green").css("color", "blue");
+        
+        } else if(uvResult >= 3.1 && uvResult <=5){
+            $("#indexColor").css("background-color", "yellow").css("color", "blue");
+        } else if (uvResult >= 5.1 && uvResult <=7.5){
+            $("#indexColor").css("background-color", "orange").css("color", "blue");
+        } else if (uvResult >= 7.6 && uvResult <=10); {
+            $("#indexColor").css("background-color", "red").css("color", "white");
+        };*/
+    });
    
     
 };
