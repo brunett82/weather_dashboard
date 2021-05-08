@@ -23,7 +23,7 @@ function curWeather(location) {
         var icon = data.weather[0].icon;
         var iUrl = `https://openweathermap.org/img/wn/${icon}.png`;
         var cityData = $(`
-                    <h3> ${date} <br>${data.name}  <img src="${iUrl}" alt="${data.weather[0].description}"</h3>
+                    <h3> ${date}: <br>${data.name}  <img id="primeIcon" src="${iUrl}" alt="${data.weather[0].description}"</h3>
                     <p> Current Temp: ${data.main.temp}\u00B0 F </p>
                     <p> Wind Speed:  ${data.wind.speed} mph </p>
                     <p> Humidity: ${data.main.humidity} \% </p>`);
@@ -63,7 +63,7 @@ function curWeather(location) {
     for (let i = 1; i < 6; i++) {
             var fcstCard = document.createElement("div");
             var dateDiv = document.createElement("div");
-            var fcstDate = moment(fvDay.daily[i].dt * 1000).format("MM-DD-YYYY");
+            var fcstDate = moment(fvDay.daily[i].dt * 1000).format("M/D");
             var iconDiv = document.createElement("div");
             var tempDiv = document.createElement("div");
             var humidDiv = document.createElement("div");

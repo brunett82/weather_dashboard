@@ -7,12 +7,12 @@
  }
 header {
     background-color: rgba(43, 109, 25, 0.462);
-    color: white;
+    color: rgb(226, 223, 223);
     border-bottom: saddlebrown;
     border-left:rgba(43, 109, 25, 0.462);
     border-right: rgba(43, 109, 25, 0.462);
     border-top: rgba(43, 109, 25, 0.462);
-    border-style: ridge;
+    border-style:inset;
 
 }
 h1 {
@@ -50,6 +50,12 @@ p {
     border-style: solid;
     border-radius: 15%;
     border-color: rgb(90, 89, 89);
+}
+#primeIcon {
+   padding-bottom: 10px;
+   padding-top: 10px;
+   margin-bottom: 4px;
+    
 }
 .uv {
     font-weight: 500;
