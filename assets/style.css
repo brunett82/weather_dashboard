@@ -2,8 +2,9 @@
     font-family: Arial, Helvetica, sans-serif;
 }
  body {
-     background-image: url(./J9AFcz.jpeg);
+     background-image: url(./images/J9AFcz.jpeg);
      background-size: cover;
+     display: flexbox;
  }
 header {
     background-color: rgba(43, 109, 25, 0.462);
@@ -56,6 +57,9 @@ p {
    padding-top: 10px;
    margin-bottom: 4px;
     
+}
+.mainArea {
+    viewport-fit: 100%;
 }
 .uv {
     font-weight: 500;

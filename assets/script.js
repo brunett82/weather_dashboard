@@ -29,7 +29,7 @@ function curWeather(location) {
                     <p> Humidity: ${data.main.humidity} \% </p>`);
        
         $("#todayWeather").append(cityData);
-        
+    //UV fetch    
     fetch("https://api.openweathermap.org/data/2.5/uvi?appid=957c1d427eb08dc32b2d83caeea47227&lat=" + data.coord.lat + "&lon=" + data.coord.lon)
     .then(function (getUV) {
         return getUV.json();
@@ -54,7 +54,7 @@ function curWeather(location) {
         
         } ;
         })  
-    
+    //Five day forecast fetch
     return fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + data.coord.lat + "&lon=" + data.coord.lon + "&appid=957c1d427eb08dc32b2d83caeea47227&units=imperial")  
     .then (function (fvDay){
         return fvDay.json();
@@ -90,6 +90,7 @@ function curWeather(location) {
         })
     })
 };
+//Local storage retrieval
 function loadStorage() {
     var savedPlaces = localStorage.getItem("Cities");
 
@@ -100,6 +101,7 @@ function loadStorage() {
         curWeather(city[0]);
     }
 };
+//Adding cities saved to local storage to search history as buttons
 function displayCityBtn() {
     $("#searchHistory").empty();
     for (var i = 0; i < city.length; i++){
@@ -113,18 +115,17 @@ function displayCityBtn() {
     }
     localStorage.setItem("Cities", JSON.stringify(city));
 };
-    $("#button").on("click",function(event){
-		
+//Search event
+$("#button").on("click",function(event){
 		var location = $("#searchField").val();
-		
 		city.push(location);
-		
 		displayCityBtn();
 		curWeather(location);
-	});
-	$(document).on("click", ".cityBtn", function() {
+});
+
+$(document).on("click", ".cityBtn", function() {
         $("#todayWeather").empty();
         $("#fiveWeath").empty();
 		curWeather($(this).attr("data-cityName"));
-	});
-	loadStorage();
+});
+loadStorage();
