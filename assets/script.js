@@ -9,11 +9,8 @@
     4A. Create an object to contain the data (city, temp, humidity, windspeed, UV index, and weather Icon).
 7. Render current day forecast data from object to primary box.
 8. Render 5 day forecast data to individual cards.*/
-
 var date = moment().format("L");
 var city = [];
-
-
 //Weather function
 function curWeather(location) {
     var qUrl = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=imperial&appid=957c1d427eb08dc32b2d83caeea47227`;
@@ -26,11 +23,10 @@ function curWeather(location) {
         var icon = data.weather[0].icon;
         var iUrl = `https://openweathermap.org/img/wn/${icon}.png`;
         var cityData = $(`
-                    <h3> ${data.name}  ${date} <img src="${iUrl}" alt="${data.weather[0].description}"</h3>
+                    <h3> ${date} <br>${data.name}  <img src="${iUrl}" alt="${data.weather[0].description}"</h3>
                     <p> Current Temp: ${data.main.temp}\u00B0 F </p>
                     <p> Wind Speed:  ${data.wind.speed} mph </p>
                     <p> Humidity: ${data.main.humidity} \% </p>`);
-                    console.log('data', data);
        
         $("#todayWeather").append(cityData);
         
@@ -40,19 +36,23 @@ function curWeather(location) {
     })
    
     .then(function (idxResp) {
-        var uvWrite = $(`<p>UV Index: <span id='indexColor' class='p-2'>${idxResp.value}</span></p>`);
+        var uvWrite = $(`<p class='uv'>UV Index: <span id='indexColor' class='p-2'>${idxResp.value}</span></p>`);
         $("#todayWeather").append(uvWrite);
-    
-    if (idxResp.value <= 3) {
-        $("#indexColor").css("background-color", "green").css("color", "blue");
         
-        } else if(idxResp.value >= 3.1 && idxResp.value <=5){
-            $("#indexColor").css("background-color", "yellow").css("color", "blue");
-        } else if (idxResp.value >= 5.1 && idxResp.value <=7.5){
-            $("#indexColor").css("background-color", "orange").css("color", "blue");
-        } else if (idxResp.value >= 7.6 && idxResp.value <=10); {
+        var uV = idxResp.value;
+        if (uV > 7 && uV < 10); {
             $("#indexColor").css("background-color", "red").css("color", "white");
-        };
+        }
+        if (uV > 5 && uV < 7){
+            $("#indexColor").css("background-color","orange").css("color", "black");
+        }
+        if(uV > 3 && uV < 5){
+            $("#indexColor").css({"background-color":"yellow","color":"black"});
+        }      
+        if (uV < 3) {
+        $("#indexColor").css("background-color", "green").css("color", "black");
+        
+        } ;
         })  
     
     return fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + data.coord.lat + "&lon=" + data.coord.lon + "&appid=957c1d427eb08dc32b2d83caeea47227&units=imperial")  
@@ -68,8 +68,8 @@ function curWeather(location) {
             var tempDiv = document.createElement("div");
             var humidDiv = document.createElement("div");
 
-            fcstCard.classList = "flex-card mx-2 px-2 border-dark bg-info text-light";
-            
+            fcstCard.classList = "fcstCard flex-card mx-2 px-2 border-dark text-light";
+                        
             dateDiv.classList = "secondary-text card-title";
             dateDiv.innerHTML = "<h4 class='font-weight-bold'>" + fcstDate + "</h4>";
             
@@ -90,7 +90,6 @@ function curWeather(location) {
         })
     })
 };
-
 function loadStorage() {
     var savedPlaces = localStorage.getItem("Cities");
 
@@ -101,10 +100,8 @@ function loadStorage() {
         curWeather(city[0]);
     }
 };
-
 function displayCityBtn() {
     $("#searchHistory").empty();
-
     for (var i = 0; i < city.length; i++){
         var newBtn = $("<button>");
         newBtn.attr("type", "button");
@@ -116,7 +113,6 @@ function displayCityBtn() {
     }
     localStorage.setItem("Cities", JSON.stringify(city));
 };
-
     $("#button").on("click",function(event){
 		
 		var location = $("#searchField").val();
@@ -126,13 +122,9 @@ function displayCityBtn() {
 		displayCityBtn();
 		curWeather(location);
 	});
-	
 	$(document).on("click", ".cityBtn", function() {
         $("#todayWeather").empty();
         $("#fiveWeath").empty();
 		curWeather($(this).attr("data-cityName"));
 	});
-
 	loadStorage();
-
-

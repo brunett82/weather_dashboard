@@ -1,0 +1,72 @@
+:root {
+    font-family: Arial, Helvetica, sans-serif;
+}
+ body {
+     background-image: url(./J9AFcz.jpeg);
+     background-size: cover;
+ }
+header {
+    background-color: rgba(43, 109, 25, 0.462);
+    color: white;
+    border-bottom: saddlebrown;
+    border-left:rgba(43, 109, 25, 0.462);
+    border-right: rgba(43, 109, 25, 0.462);
+    border-top: rgba(43, 109, 25, 0.462);
+    border-style: ridge;
+
+}
+h1 {
+    text-align: end;
+}
+h2 {
+    font-weight: 600;
+    text-align: start;
+    text-decoration: underline ;
+    margin-top: 30px;
+}
+h3 {
+    padding-left: 15px;
+}
+p {
+    font-weight: 400;
+}
+#searchHistory {
+    margin-left: 0px;
+    padding: 0px;
+}
+#searchField {
+    max-width: 200px;
+    margin-left: 10px;
+}
+#button {
+    margin-left: 5px;
+    background-color: saddlebrown;
+    color:rgb(251, 248, 248)
+}
+#sh {
+    margin-left: 5px;
+}
+#indexColor {
+    border-style: solid;
+    border-radius: 15%;
+    border-color: rgb(90, 89, 89);
+}
+.uv {
+    font-weight: 500;
+    font-size: 25px;
+    padding-top: 180px;
+    padding-left: 50px;
+}
+.fiveDay{
+    margin-left: 0px;
+}
+.cityBtn {
+    max-width: 200px;
+    background-color: saddlebrown;
+    color: rgb(251, 248, 248);
+    margin: 5px;
+    text-transform: capitalize;
+}
+.fcstCard {
+    background-color: rgba(43, 109, 25, 0.462);
+}

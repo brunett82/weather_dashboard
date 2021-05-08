@@ -16,23 +16,24 @@
     <div class="container-fluid row">
       <div class="col-3 justify-content-center pt-3">
         <div class="search mb-4">
-          <h3 class="justify-content-start pt-3">Enter a City to See Current and 5-Day Forecast</h3>
+          <h3 class="justify-content-start pt-3">Enter a City to See <br>Current and 5-Day <br> Forecast</h3>
           <form class="form-inline">
             <input class="form-control float-left" type="search" placeholder="Atlanta" id="searchField">
             <button class="btn btn-outline-dark" type="submit" id="button">Search</button>
           </form>
         </div>
         <div>
-          <h4>Search History:</h4>
+          <h4 id="sh">Search History:</h4>
           <div class="container col-12" id="searchHistory"></div>
         </div>
       </div>
       <div class="col-9">
-        <div class="row bg-light p-3" >
+        <h2 class="mb-2">Today's Weather</h2>
+        <div class="row p-3" > 
           <div class="row" id="todayWeather"></div>
         </div>
         <div class="fiveDay container">
-          <h3>5-Day Forecast</h3>
+          <h2>5-Day Forecast</h2>
           <div class="row" id="fiveWeath"></div>
         </div>
       </div>
