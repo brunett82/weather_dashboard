@@ -12,13 +12,7 @@
 
 var date = moment().format("L");
 
-var key = '957c1d427eb08dc32b2d83caeea47227'
-
-
-
-
-//Current Weather function//
-
+//Weather function
 function curWeather(locale) {
     var qUrl = `https://api.openweathermap.org/data/2.5/weather?q=${locale}&units=imperial&appid=957c1d427eb08dc32b2d83caeea47227`;
      
@@ -38,7 +32,7 @@ function curWeather(locale) {
        
         $("#todayWeather").append(cityData);
         
-    fetch("https://api.openweathermap.org/data/2.5/uvi?appid=c83c5006fffeb4aa44a34ffd6a27f135&lat=" + data.coord.lat + "&lon=" + data.coord.lon)
+    fetch("https://api.openweathermap.org/data/2.5/uvi?appid=957c1d427eb08dc32b2d83caeea47227&lat=" + data.coord.lat + "&lon=" + data.coord.lon)
     .then(function (getUV) {
         return getUV.json();
     })
@@ -59,53 +53,48 @@ function curWeather(locale) {
         };
         })  
     
-    fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + idxResp.lat + "&lon=" + idxResp.lon + "&appid=c83c5006fffeb4aa44a34ffd6a27f135&units=imperial")  
+    return fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + data.coord.lat + "&lon=" + data.coord.lon + "&appid=957c1d427eb08dc32b2d83caeea47227&units=imperial")  
     .then (function (fvDay){
         return fvDay.json();
     }) 
-    
     .then (function (fvDay) {
-
-    
-   
-        for (let i = 0; i < 6; i++) {
-            var fcstEl = document.createElement("div");
-            fcstEl.classList = "forecast-card card-body rounded-lg border-dark bg-info text-light";
-            $('#fiveWeath').append(fcstEl);
-
-            // display date 
+    for (let i = 1; i < 6; i++) {
+            var fcstCard = document.createElement("div");
             var dateDiv = document.createElement("div");
-            dateDiv.classList = "secondary-text card-title";
-            var fcstDate = moment(data.daily[i].dt).format("L");
-            dateDiv.innerHTML = "<h5 class='font-weight-bold'>" + fcstDate + "</h5>";
-            forecastEl.append(dateDiv);
-
-            // weather icon
+            var fcstDate = moment(fvDay.daily[i].dt * 1000).format("MM-DD-YYYY");
             var iconDiv = document.createElement("div");
-            iconDiv.innerHTML = "<img src='http://openweathermap.org/img/w/" + data.daily[i].weather[0].icon + ".png' class='forecast-icon' alt=Current weather icon/>";
-            forecastEl.append(iconDiv);
-
-            // display day temperature forecast
             var tempDiv = document.createElement("div");
-            tempDiv.classList = "card-text secondary-text";
-            tempDiv.innerHTML = "<h6>Day Temp:<span>" + " " + Math.round(forecastResponse.daily[i].temp.day) + "&#176F</span></h6>" + "<h6>Night Temp:<span>" + " " + Math.round(forecastResponse.daily[i].temp.night) + " &#176F</span></h6>";
-            forecastEl.appendChild(tempDiv);
-
-            // display humidity forecast
             var humidDiv = document.createElement("div");
+
+            fcstCard.classList = "flex-card mx-2 px-2 border-dark bg-info text-light";
+            
+            dateDiv.classList = "secondary-text card-title";
+            dateDiv.innerHTML = "<h4 class='font-weight-bold'>" + fcstDate + "</h4>";
+            
+            iconDiv.innerHTML = "<img src='https://openweathermap.org/img/w/" + fvDay.daily[i].weather[0].icon + ".png 'class='forecast-icon' alt=Current weather icon/>";
+            
+            tempDiv.classList = "card-text secondary-text";
+            tempDiv.innerHTML = "<h6>Day Temp:<span>" + " " + Math.round(fvDay.daily[i].temp.day) + "&#176F</span></h6>" + "<h6>Night Temp:<span>" + " " + Math.round(fvDay.daily[i].temp.night) + "&#176F</span></h6>";
+            
             humidDiv.classList = "card-text secondary-text";
-            humidDiv.innerHTML = "<h6>Humidity:<span>" + " " + forecastResponse.daily[i].humidity + "%</span></h6>";
-            forecastEl.appendChild(humidDiv);
-        }
-   })
-
-
-
+            humidDiv.innerHTML = "<h6>Humidity:<span>" + " " + fvDay.daily[i].humidity + "%</span></h6>";
+            
+            $('#fiveWeath').append(fcstCard);
+            fcstCard.append(dateDiv);
+            fcstCard.append(iconDiv);
+            fcstCard.appendChild(tempDiv);
+            fcstCard.appendChild(humidDiv);
+            }
+        })
     })
 };
 
 
-    
+
+
+
+
+
 
 
 //Search button functionality
