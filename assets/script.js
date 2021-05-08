@@ -11,10 +11,12 @@
 8. Render 5 day forecast data to individual cards.*/
 
 var date = moment().format("L");
+var city = [];
+
 
 //Weather function
-function curWeather(locale) {
-    var qUrl = `https://api.openweathermap.org/data/2.5/weather?q=${locale}&units=imperial&appid=957c1d427eb08dc32b2d83caeea47227`;
+function curWeather(location) {
+    var qUrl = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=imperial&appid=957c1d427eb08dc32b2d83caeea47227`;
      
     fetch(qUrl)
     .then(function(response) {
@@ -89,18 +91,48 @@ function curWeather(locale) {
     })
 };
 
+function loadStorage() {
+    var savedPlaces = localStorage.getItem("Cities");
+
+    if (savedPlaces) {
+        city = JSON.parse(savedPlaces);
+        city.reverse();
+        displayCityBtn();
+        curWeather(city[0]);
+    }
+};
+
+function displayCityBtn() {
+    $("#searchHistory").empty();
+
+    for (var i = 0; i < city.length; i++){
+        var newBtn = $("<button>");
+        newBtn.attr("type", "button");
+        newBtn.attr("class", "list-group-item list-group-item-action cityBtn");
+        newBtn.attr("data-cityName", city[i]);
+        newBtn.text(city[i])
+
+        $("#searchHistory").append(newBtn);
+    }
+    localStorage.setItem("Cities", JSON.stringify(city));
+};
+
+    $("#button").on("click",function(event){
+		
+		var location = $("#searchField").val();
+		
+		city.push(location);
+		
+		displayCityBtn();
+		curWeather(location);
+	});
+	
+	$(document).on("click", ".cityBtn", function() {
+        $("#todayWeather").empty();
+        $("#fiveWeath").empty();
+		curWeather($(this).attr("data-cityName"));
+	});
+
+	loadStorage();
 
 
-
-
-
-
-
-
-//Search button functionality
-$('#button').on('click', function(event) {
-    event.preventDefault();
-    var locale = $('#searchField').val().trim();
-    curWeather(locale);
-    
-})
