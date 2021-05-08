@@ -24,7 +24,7 @@ function curWeather(locale) {
      
     fetch(qUrl)
     .then(function(response) {
-        return response.json();
+        return response.json(); 
     })
     .then(function (data){
         var icon = data.weather[0].icon;
@@ -38,36 +38,74 @@ function curWeather(locale) {
        
         $("#todayWeather").append(cityData);
         
-    var lat = data.coord.lat;
-    var lon = data.coord.lon;  
-    var indexUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=957c1d427eb08dc32b2d83caeea47227`;  
-    /*
-    fetch(indexUrl)
-    .then(function (uvResponse) {
-        return uvResponse.json();
+    fetch("https://api.openweathermap.org/data/2.5/uvi?appid=c83c5006fffeb4aa44a34ffd6a27f135&lat=" + data.coord.lat + "&lon=" + data.coord.lon)
+    .then(function (getUV) {
+        return getUV.json();
     })
    
-    .then(function (uvData) {
-       
-        var uvResult = uvData.value;
-        var uvWrite = $(`<p>UV Index: <span id='indexColor' class='p-2'>${uvResult}</span></p>`);
-        
+    .then(function (idxResp) {
+        var uvWrite = $(`<p>UV Index: <span id='indexColor' class='p-2'>${idxResp.value}</span></p>`);
         $("#todayWeather").append(uvWrite);
-    });
-    if (uvResult <= 3) {
+    
+    if (idxResp.value <= 3) {
         $("#indexColor").css("background-color", "green").css("color", "blue");
         
-        } else if(uvResult >= 3.1 && uvResult <=5){
+        } else if(idxResp.value >= 3.1 && idxResp.value <=5){
             $("#indexColor").css("background-color", "yellow").css("color", "blue");
-        } else if (uvResult >= 5.1 && uvResult <=7.5){
+        } else if (idxResp.value >= 5.1 && idxResp.value <=7.5){
             $("#indexColor").css("background-color", "orange").css("color", "blue");
-        } else if (uvResult >= 7.6 && uvResult <=10); {
+        } else if (idxResp.value >= 7.6 && idxResp.value <=10); {
             $("#indexColor").css("background-color", "red").css("color", "white");
-        };*/
-    });
-   
+        };
+        })  
     
+    fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + idxResp.lat + "&lon=" + idxResp.lon + "&appid=c83c5006fffeb4aa44a34ffd6a27f135&units=imperial")  
+    .then (function (fvDay){
+        return fvDay.json();
+    }) 
+    
+    .then (function (fvDay) {
+
+    
+   
+        for (let i = 0; i < 6; i++) {
+            var fcstEl = document.createElement("div");
+            fcstEl.classList = "forecast-card card-body rounded-lg border-dark bg-info text-light";
+            $('#fiveWeath').append(fcstEl);
+
+            // display date 
+            var dateDiv = document.createElement("div");
+            dateDiv.classList = "secondary-text card-title";
+            var fcstDate = moment(data.daily[i].dt).format("L");
+            dateDiv.innerHTML = "<h5 class='font-weight-bold'>" + fcstDate + "</h5>";
+            forecastEl.append(dateDiv);
+
+            // weather icon
+            var iconDiv = document.createElement("div");
+            iconDiv.innerHTML = "<img src='http://openweathermap.org/img/w/" + data.daily[i].weather[0].icon + ".png' class='forecast-icon' alt=Current weather icon/>";
+            forecastEl.append(iconDiv);
+
+            // display day temperature forecast
+            var tempDiv = document.createElement("div");
+            tempDiv.classList = "card-text secondary-text";
+            tempDiv.innerHTML = "<h6>Day Temp:<span>" + " " + Math.round(forecastResponse.daily[i].temp.day) + "&#176F</span></h6>" + "<h6>Night Temp:<span>" + " " + Math.round(forecastResponse.daily[i].temp.night) + " &#176F</span></h6>";
+            forecastEl.appendChild(tempDiv);
+
+            // display humidity forecast
+            var humidDiv = document.createElement("div");
+            humidDiv.classList = "card-text secondary-text";
+            humidDiv.innerHTML = "<h6>Humidity:<span>" + " " + forecastResponse.daily[i].humidity + "%</span></h6>";
+            forecastEl.appendChild(humidDiv);
+        }
+   })
+
+
+
+    })
 };
+
+
+    
 
 
 //Search button functionality
@@ -75,5 +113,5 @@ $('#button').on('click', function(event) {
     event.preventDefault();
     var locale = $('#searchField').val().trim();
     curWeather(locale);
-
+    
 })
